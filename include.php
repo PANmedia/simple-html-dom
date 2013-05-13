@@ -20,5 +20,3 @@ if (!defined('DEFAULT_TARGET_CHARSET')) define('DEFAULT_TARGET_CHARSET', 'UTF-8'
 if (!defined('DEFAULT_BR_TEXT'))        define('DEFAULT_BR_TEXT', "\r\n");
 if (!defined('DEFAULT_SPAN_TEXT'))      define('DEFAULT_SPAN_TEXT', ' ');
 if (!defined('MAX_FILE_SIZE'))          define('MAX_FILE_SIZE', 600000);
-
-require_once __DIR__ . '/functions.php';
