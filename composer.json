@@ -1,0 +1,45 @@
+{
+    "name": "petah/simple-html-dom",
+    "description": "Simple HTML DOM clone with clean namespaces.",
+    "keywords": [
+        "dom"
+    ],
+    "license": "MIT",
+    "type": "library",
+    "authors": [
+        {
+            "name": "S.C. Chen",
+            "email": "me578022@gmail.com"
+        },
+        {
+            "name": "Yousuke Kumakura"
+        },
+        {
+            "name": "John Schlick"
+        },
+        {
+            "name": "Rus Carroll"
+        },
+        {
+            "name": "Vadim Voituk"
+        },
+        {
+            "name": "Antcs"
+        },
+        {
+            "name": "David Neilsen",
+            "email": "d.c.neilsen@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0"
+    },
+    "autoload": {
+        "psr-0": {
+            "Petah": "classes/"
+        },
+        "files": [
+            "include.php"
+        ]
+    }
+}
