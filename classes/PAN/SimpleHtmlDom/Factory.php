@@ -2,7 +2,7 @@
 /**
  * PAN\SimpleHthmlDom\Factory
  *
- * @author David Neilsen <d.c.neilsen@gmail.com>
+ * @author David Neilsen <david@panmedia.co.nz>
  */
 namespace PAN\SimpleHthmlDom;
 use PAN\SimpleHtmlDom;

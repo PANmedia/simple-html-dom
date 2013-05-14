@@ -5,7 +5,7 @@
  * @author S.C. Chen <me578022@gmail.com>
  * @author John Schlick
  * @author Rus Carroll
- * @author David Neilsen <d.c.neilsen@gmail.com>
+ * @author David Neilsen <david@panmedia.co.nz>
  */
 namespace PAN\SimpleHthmlDom;
 
