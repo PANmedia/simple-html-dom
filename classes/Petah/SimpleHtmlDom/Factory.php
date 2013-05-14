@@ -1,11 +1,11 @@
 <?php
 /**
- * Petah\SimpleHthmlDom\Factory
+ * PanMedia\SimpleHthmlDom\Factory
  *
  * @author David Neilsen <d.c.neilsen@gmail.com>
  */
-namespace Petah\SimpleHthmlDom;
-use Petah\SimpleHtmlDom;
+namespace PanMedia\SimpleHthmlDom;
+use PanMedia\SimpleHtmlDom;
 
 class Factory {
 

@@ -1,13 +1,13 @@
 <?php
 /**
- * Petah\SimpleHTMLDom
+ * PanMedia\SimpleHTMLDom
  *
  * @author S.C. Chen <me578022@gmail.com>
  * @author John Schlick
  * @author Rus Carroll
  */
-namespace Petah;
-use Petah\SimpleHTMLDom\Node;
+namespace PanMedia;
+use PanMedia\SimpleHTMLDom\Node;
 
 /**
  * Paperg - in the find routine: allow us to specify that we want case insensitive testing of the value of the selector.

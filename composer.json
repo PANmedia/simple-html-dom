@@ -1,5 +1,5 @@
 {
-    "name": "petah/simple-html-dom",
+    "name": "panmedia/simple-html-dom",
     "description": "Simple HTML DOM clone with clean namespaces.",
     "keywords": [
         "dom"
@@ -36,7 +36,7 @@
     },
     "autoload": {
         "psr-0": {
-            "Petah": "classes/"
+            "PanMedia": "classes/"
         },
         "files": [
             "include.php"
