@@ -1,10 +1,10 @@
 <?php
 /**
- * PAN\SimpleHthmlDom\Factory
+ * PAN\SimpleHtmlDom\Factory
  *
  * @author David Neilsen <david@panmedia.co.nz>
  */
-namespace PAN\SimpleHthmlDom;
+namespace PAN\SimpleHtmlDom;
 use PAN\SimpleHtmlDom;
 
 class Factory {
