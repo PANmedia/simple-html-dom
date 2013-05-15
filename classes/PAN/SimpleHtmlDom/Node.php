@@ -1,13 +1,13 @@
 <?php
 /**
- * PAN\SimpleHthmlDom\Node
+ * PAN\SimpleHtmlDom\Node
  *
  * @author S.C. Chen <me578022@gmail.com>
  * @author John Schlick
  * @author Rus Carroll
  * @author David Neilsen <david@panmedia.co.nz>
  */
-namespace PAN\SimpleHthmlDom;
+namespace PAN\SimpleHtmlDom;
 
 /**
  * PaperG - added ability for "find" routine to lowercase the value of the selector.
