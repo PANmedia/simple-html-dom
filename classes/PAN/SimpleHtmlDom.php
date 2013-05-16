@@ -1,20 +1,20 @@
 <?php
 /**
- * PAN\SimpleHTMLDom
+ * PAN\SimpleHtmlDom
  *
  * @author S.C. Chen <me578022@gmail.com>
  * @author John Schlick
  * @author Rus Carroll
  */
 namespace PAN;
-use PAN\SimpleHTMLDom\Node;
+use PAN\SimpleHtmlDom\Node;
 
 /**
  * Paperg - in the find routine: allow us to specify that we want case insensitive testing of the value of the selector.
  * Paperg - change $size from protected to public so we can easily access it
  * Paperg - added ForceTagsClosed in the constructor which tells us whether we trust the html or not.  Default is to NOT trust it.
  */
-class SimpleHTMLDom {
+class SimpleHtmlDom {
 
     public $root = null;
     public $nodes = array();
