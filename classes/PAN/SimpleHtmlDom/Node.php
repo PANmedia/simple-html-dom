@@ -896,4 +896,12 @@ class Node {
         return $node;
     }
 
+    function val() {
+        return $this->attr('value');
+    }
+
+    function attr($name) {
+        return $this->attr[$name];
+    }
+
 }
