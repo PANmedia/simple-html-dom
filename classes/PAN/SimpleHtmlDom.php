@@ -170,8 +170,8 @@ class SimpleHtmlDom {
         unset($this->noise);
     }
 
-    function dump($show_attr = true) {
-        $this->root->dump($show_attr);
+    public function dump($show_attr = true) {
+        return $this->root->dump($show_attr);
     }
 
     // prepare HTML data and init everything

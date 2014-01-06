@@ -48,23 +48,39 @@ class Node {
     }
 
     // dump node's tree
-    function dump($show_attr = true, $deep = 0) {
-        $lead = str_repeat('	', $deep);
-
-        echo $lead . $this->tag;
-        if ($show_attr && count($this->attr) > 0) {
-            echo '(';
-            foreach ($this->attr as $k => $v)
-                echo "[$k]=>\"" . $this->$k . '", ';
-            echo ')';
+    public function dump($show_attr = true, $deep = 0, $showWhiteSpace = false) {
+        $lead = str_repeat('    ', $deep);
+        $result = '';
+        if ($this->tag == 'text') {
+            if (!trim($this->innertext())) {
+                if ($showWhiteSpace) {
+                    $result .= $lead . 'whitespace "' . $this->innertext() . '"';
+                } else {
+                    return;
+                }
+            } else {
+                $result .= $lead . $this->tag . ' "' . $this->innertext() . '"';
+            }
+        } elseif ($this->tag == 'comment') {
+            $result .= $lead . $this->outertext();
+        } else {
+            $result .= $lead . '<' . $this->tag . '>';
         }
-        echo "\n";
-
+        if ($show_attr && count($this->attr) > 0) {
+            $result .= ' (';
+            foreach ($this->attr as $key => $value) {
+                $result .= "[$key]=>\"" . $this->$key . '", ';
+            }
+            $result .= ')';
+        }
+        $result .= PHP_EOL;
         if ($this->nodes) {
             foreach ($this->nodes as $c) {
-                $c->dump($show_attr, $deep + 1);
+                $result .= $c->dump($show_attr, $deep + 1);
             }
         }
+
+        return $result;
     }
 
     // Debugging function to dump a single dom node with a bunch of information about it.
