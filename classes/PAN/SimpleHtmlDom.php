@@ -231,36 +231,23 @@ class SimpleHtmlDom {
 
         $charset = null;
 
-        if (function_exists('get_last_retrieve_url_contents_content_type')) {
-            $contentTypeHeader = get_last_retrieve_url_contents_content_type();
-            $success = preg_match('/charset=(.+)/', $contentTypeHeader, $matches);
-            if ($success) {
-                $charset = $matches[1];
-                if (is_object($debug_object)) {
-                    $debug_object->debugLog(2, 'header content-type found charset of: ' . $charset);
-                }
+        $el = $this->root->find('meta[http-equiv=Content-Type]', 0);
+        if (count($el) !== 0) {
+            $fullvalue = $el->content;
+            if (is_object($debug_object)) {
+                $debug_object->debugLog(2, 'meta content-type tag found' . $fullvalue);
             }
-        }
 
-        if (empty($charset)) {
-            $el = $this->root->find('meta[http-equiv=Content-Type]', 0);
-            if (!empty($el)) {
-                $fullvalue = $el->content;
-                if (is_object($debug_object)) {
-                    $debug_object->debugLog(2, 'meta content-type tag found' . $fullvalue);
-                }
-
-                if (!empty($fullvalue)) {
-                    $success = preg_match('/charset=(.+)/', $fullvalue, $matches);
-                    if ($success) {
-                        $charset = $matches[1];
-                    } else {
-                        // If there is a meta tag, and they don't specify the character set, research says that it's typically ISO-8859-1
-                        if (is_object($debug_object)) {
-                            $debug_object->debugLog(2, 'meta content-type tag couldn\'t be parsed. using iso-8859 default.');
-                        }
-                        $charset = 'ISO-8859-1';
+            if (!empty($fullvalue)) {
+                $success = preg_match('/charset=(.+)/', $fullvalue, $matches);
+                if ($success) {
+                    $charset = $matches[1];
+                } else {
+                    // If there is a meta tag, and they don't specify the character set, research says that it's typically ISO-8859-1
+                    if (is_object($debug_object)) {
+                        $debug_object->debugLog(2, 'meta content-type tag couldn\'t be parsed. using iso-8859 default.');
                     }
+                    $charset = 'ISO-8859-1';
                 }
             }
         }
