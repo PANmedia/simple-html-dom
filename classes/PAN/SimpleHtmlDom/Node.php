@@ -297,6 +297,10 @@ class Node {
             $ret .= '</' . $this->tag . '>';
         return $ret;
     }
+    
+    public function html() {
+        return $this->innertext();
+    }
 
     // get dom node's plain text
     function text() {
@@ -375,24 +379,27 @@ class Node {
     //PaperG - added ability for find to lowercase the value of the selector.
     function find($selector, $idx = null, $lowercase = false) {
         $selectors = $this->parse_selector($selector);
-        if (($count = count($selectors)) === 0)
-            return array();
-        $found_keys = array();
+        if (($count = count($selectors)) === 0) {
+            return new NodeCollection();
+        }
+        $found_keys = [];
 
         // find each selector
         for ($c = 0; $c < $count; ++$c) {
             // The change on the below line was documented on the sourceforge code tracker id 2788009
             // used to be: if (($levle=count($selectors[0]))===0) return array();
-            if (($levle = count($selectors[$c])) === 0)
-                return array();
-            if (!isset($this->_[HDOM_INFO_BEGIN]))
-                return array();
+            if (($levle = count($selectors[$c])) === 0) {
+                return new NodeCollection();
+            }
+            if (!isset($this->_[HDOM_INFO_BEGIN])) {
+                return new NodeCollection();
+            }
 
-            $head = array($this->_[HDOM_INFO_BEGIN] => 1);
+            $head = [$this->_[HDOM_INFO_BEGIN] => 1];
 
             // handle descendant selectors, no recursive!
             for ($l = 0; $l < $levle; ++$l) {
-                $ret = array();
+                $ret = [];
                 foreach ($head as $k => $v) {
                     $n = ($k === -1) ? $this->dom->root : $this->dom->nodes[$k];
                     //PaperG - Pass this optional parameter on to the seek function.
@@ -402,8 +409,9 @@ class Node {
             }
 
             foreach ($head as $k => $v) {
-                if (!isset($found_keys[$k]))
+                if (!isset($found_keys[$k])) {
                     $found_keys[$k] = 1;
+                }
             }
         }
 
@@ -411,14 +419,16 @@ class Node {
         ksort($found_keys);
 
         $found = array();
-        foreach ($found_keys as $k => $v)
+        foreach ($found_keys as $k => $v) {
             $found[] = $this->dom->nodes[$k];
+        }
 
         // return nth-element or array
-        if (is_null($idx))
-            return $found;
-        else if ($idx < 0)
+        if (is_null($idx)) {
+            return new NodeCollection($found);
+        } elseif ($idx < 0) {
             $idx = count($found) + $idx;
+        }
         return (isset($found[$idx])) ? $found[$idx] : null;
     }
 
