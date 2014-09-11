@@ -59,11 +59,7 @@ class SimpleHtmlDom {
 
     function __construct($str = null, $lowercase = true, $forceTagsClosed = true, $target_charset = DEFAULT_TARGET_CHARSET, $stripRN = true, $defaultBRText = DEFAULT_BR_TEXT, $defaultSpanText = DEFAULT_SPAN_TEXT) {
         if ($str) {
-            if (preg_match("/^http:\/\//i", $str) || is_file($str)) {
-                $this->load_file($str);
-            } else {
-                $this->load($str, $lowercase, $stripRN, $defaultBRText, $defaultSpanText);
-            }
+            $this->load($str, $lowercase, $stripRN, $defaultBRText, $defaultSpanText);
         }
         // Forcing tags to be closed implies that we don't trust the html, but it can lead to parsing errors if we SHOULD trust the html.
         if (!$forceTagsClosed) {
@@ -111,17 +107,6 @@ class SimpleHtmlDom {
         return $this;
     }
 
-    // load html from file
-    function load_file() {
-        $args = func_get_args();
-        $this->load(call_user_func_array('file_get_contents', $args), true);
-        // Throw an error if we can't properly load the dom.
-        if (($error = error_get_last()) !== null) {
-            $this->clear();
-            return false;
-        }
-    }
-
     // set callback function
     function set_callback($function_name) {
         $this->callback = $function_name;
@@ -133,10 +118,8 @@ class SimpleHtmlDom {
     }
 
     // save dom as string
-    function save($filepath = '') {
+    function save() {
         $ret = $this->root->innertext();
-        if ($filepath !== '')
-            file_put_contents($filepath, $ret, LOCK_EX);
         return $ret;
     }
 
@@ -743,11 +726,6 @@ class SimpleHtmlDom {
 
     function getElementsByTagName($name, $idx = -1) {
         return $this->find($name, $idx);
-    }
-
-    function loadFile() {
-        $args = func_get_args();
-        $this->load_file($args);
     }
 
 }

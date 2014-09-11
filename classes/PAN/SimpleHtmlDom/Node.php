@@ -297,7 +297,7 @@ class Node {
             $ret .= '</' . $this->tag . '>';
         return $ret;
     }
-    
+
     public function html() {
         return $this->innertext();
     }
@@ -927,7 +927,7 @@ class Node {
     }
 
     function attr($name) {
-        return $this->attr[$name];
+        return isset($this->attr[$name]) ? $this->attr[$name] : null;
     }
 
 }
