@@ -17,12 +17,12 @@ class Node {
 
     public $nodetype = HDOM_TYPE_TEXT;
     public $tag = 'text';
-    public $attr = array();
-    public $children = array();
-    public $nodes = array();
+    public $attr = [];
+    public $children = [];
+    public $nodes = [];
     public $parent = null;
     // The "info" array - see HDOM_INFO_... for what each element contains.
-    public $_ = array();
+    public $_ = [];
     public $tag_start = 0;
     private $dom = null;
 
@@ -85,7 +85,6 @@ class Node {
 
     // Debugging function to dump a single dom node with a bunch of information about it.
     function dump_node($echo = true) {
-
         $string = $this->tag;
         if (count($this->attr) > 0) {
             $string .= '(';
@@ -234,15 +233,20 @@ class Node {
 
     // get dom node's inner html
     function innertext() {
-        if (isset($this->_[HDOM_INFO_INNER]))
+        if (isset($this->_[HDOM_INFO_INNER])) {
             return $this->_[HDOM_INFO_INNER];
-        if (isset($this->_[HDOM_INFO_TEXT]))
+        }
+        if (isset($this->_[HDOM_INFO_TEXT])) {
             return $this->dom->restore_noise($this->_[HDOM_INFO_TEXT]);
+        }
 
-        $ret = '';
-        foreach ($this->nodes as $n)
-            $ret .= $n->outertext();
-        return $ret;
+        $return = '';
+        if ($this->nodes) {
+            foreach ($this->nodes as $node) {
+                $return .= $node->outertext();
+            }
+        }
+        return $return;
     }
 
     // get dom node's outer text (with tag)
@@ -298,8 +302,15 @@ class Node {
         return $ret;
     }
 
-    public function html() {
+    public function html($html = null) {
+        if ($html !== null) {
+            return $this->innertext = $html;
+        }
         return $this->innertext();
+    }
+
+    public function outerHTML() {
+        return $this->outertext();
     }
 
     // get dom node's plain text
@@ -387,7 +398,6 @@ class Node {
         // find each selector
         for ($c = 0; $c < $count; ++$c) {
             // The change on the below line was documented on the sourceforge code tracker id 2788009
-            // used to be: if (($levle=count($selectors[0]))===0) return array();
             if (($levle = count($selectors[$c])) === 0) {
                 return new NodeCollection();
             }
@@ -418,7 +428,7 @@ class Node {
         // sort keys
         ksort($found_keys);
 
-        $found = array();
+        $found = [];
         foreach ($found_keys as $k => $v) {
             $found[] = $this->dom->nodes[$k];
         }
@@ -586,8 +596,8 @@ class Node {
             $debug_object->debugLog(2, "Matches Array: ", $matches);
         }
 
-        $selectors = array();
-        $result = array();
+        $selectors = [];
+        $result = [];
         //print_r($matches);
 
         foreach ($matches as $m) {
@@ -631,7 +641,7 @@ class Node {
             $result[] = array($tag, $key, $val, $exp, $no_key);
             if (trim($m[7]) === ',') {
                 $selectors[] = $result;
-                $result = array();
+                $result = [];
             }
         }
         if (count($result) > 0)
@@ -654,17 +664,20 @@ class Node {
 
     function __set($name, $value) {
         switch ($name) {
-            case 'outertext': return $this->_[HDOM_INFO_OUTER] = $value;
-            case 'innertext':
-                if (isset($this->_[HDOM_INFO_TEXT]))
-                    return $this->_[HDOM_INFO_TEXT] = $value;
-                return $this->_[HDOM_INFO_INNER] = $value;
+            case 'outertext': {
+                $this->_[HDOM_INFO_OUTER] = $value;
+                return;
+            }
+            case 'innertext': {
+                if (isset($this->_[HDOM_INFO_TEXT])) {
+                    $this->_[HDOM_INFO_TEXT] = $value;
+                } else {
+                    $this->_[HDOM_INFO_INNER] = $value;
+                }
+                return;
+            }
         }
-        if (!isset($this->attr[$name])) {
-            $this->_[HDOM_INFO_SPACE][] = array(' ', '', '');
-            $this->_[HDOM_INFO_QUOTE][] = HDOM_QUOTE_DOUBLE;
-        }
-        $this->attr[$name] = $value;
+        $this->attr($name, $value);
     }
 
     function __isset($name) {
@@ -804,7 +817,7 @@ class Node {
         // Now look for an inline style.
         if (isset($this->attr['style'])) {
             // Thanks to user gnarf from stackoverflow for this regular expression.
-            $attributes = array();
+            $attributes = [];
             preg_match_all("/([\w-]+)\s*:\s*([^;]+)\s*;?/", $this->attr['style'], $matches, PREG_SET_ORDER);
             foreach ($matches as $match) {
                 $attributes[$match[1]] = $match[2];
@@ -926,7 +939,15 @@ class Node {
         return $this->attr('value');
     }
 
-    function attr($name) {
+    function attr($name, $value = null) {
+        if ($value !== null) {
+            if (!isset($this->attr[$name])) {
+                $this->_[HDOM_INFO_SPACE][] = array(' ', '', '');
+                $this->_[HDOM_INFO_QUOTE][] = HDOM_QUOTE_DOUBLE;
+            }
+            $this->attr[$name] = $value;
+            return $this;
+        }
         return isset($this->attr[$name]) ? $this->attr[$name] : null;
     }
 

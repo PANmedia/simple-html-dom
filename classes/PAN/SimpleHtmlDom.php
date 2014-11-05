@@ -57,10 +57,8 @@ class SimpleHtmlDom {
         'option' => array('option' => 1),
     );
 
-    function __construct($str = null, $lowercase = true, $forceTagsClosed = true, $target_charset = DEFAULT_TARGET_CHARSET, $stripRN = true, $defaultBRText = DEFAULT_BR_TEXT, $defaultSpanText = DEFAULT_SPAN_TEXT) {
-        if ($str) {
-            $this->load($str, $lowercase, $stripRN, $defaultBRText, $defaultSpanText);
-        }
+    function __construct($str, $lowercase = true, $forceTagsClosed = true, $target_charset = DEFAULT_TARGET_CHARSET, $stripRN = true, $defaultBRText = DEFAULT_BR_TEXT, $defaultSpanText = DEFAULT_SPAN_TEXT) {
+        $this->load((string) $str, $lowercase, $stripRN, $defaultBRText, $defaultSpanText);
         // Forcing tags to be closed implies that we don't trust the html, but it can lead to parsing errors if we SHOULD trust the html.
         if (!$forceTagsClosed) {
             $this->optional_closing_array = array();
@@ -670,6 +668,10 @@ class SimpleHtmlDom {
                 return $noiseElement;
             }
         }
+    }
+
+    public function html() {
+        return $this->root->innertext();
     }
 
     function __toString() {
