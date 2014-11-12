@@ -57,7 +57,7 @@ class SimpleHtmlDom {
         'option' => array('option' => 1),
     );
 
-    function __construct($str, $lowercase = true, $forceTagsClosed = true, $target_charset = DEFAULT_TARGET_CHARSET, $stripRN = true, $defaultBRText = DEFAULT_BR_TEXT, $defaultSpanText = DEFAULT_SPAN_TEXT) {
+    function __construct($str, $lowercase = true, $forceTagsClosed = true, $target_charset = DEFAULT_TARGET_CHARSET, $stripRN = false, $defaultBRText = DEFAULT_BR_TEXT, $defaultSpanText = DEFAULT_SPAN_TEXT) {
         $this->load((string) $str, $lowercase, $stripRN, $defaultBRText, $defaultSpanText);
         // Forcing tags to be closed implies that we don't trust the html, but it can lead to parsing errors if we SHOULD trust the html.
         if (!$forceTagsClosed) {
@@ -71,7 +71,7 @@ class SimpleHtmlDom {
     }
 
     // load html from string
-    function load($str, $lowercase = true, $stripRN = true, $defaultBRText = DEFAULT_BR_TEXT, $defaultSpanText = DEFAULT_SPAN_TEXT) {
+    function load($str, $lowercase = true, $stripRN = false, $defaultBRText = DEFAULT_BR_TEXT, $defaultSpanText = DEFAULT_SPAN_TEXT) {
         global $debug_object;
 
         // prepare
@@ -156,7 +156,7 @@ class SimpleHtmlDom {
     }
 
     // prepare HTML data and init everything
-    protected function prepare($str, $lowercase = true, $stripRN = true, $defaultBRText = DEFAULT_BR_TEXT, $defaultSpanText = DEFAULT_SPAN_TEXT) {
+    protected function prepare($str, $lowercase = true, $stripRN = false, $defaultBRText = DEFAULT_BR_TEXT, $defaultSpanText = DEFAULT_SPAN_TEXT) {
         $this->clear();
 
         // set the length of content before we do anything to it.
