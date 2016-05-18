@@ -1,6 +1,7 @@
 {
     "name": "pan/simple-html-dom",
     "description": "Simple HTML DOM clone with clean namespaces.",
+    "homepage": "https://github.com/PANmedia/simple-html-dom",
     "keywords": [
         "dom"
     ],
